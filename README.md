@@ -1,5 +1,5 @@
-Cameo™
-======
+Cameo™ - web-based userinfo
+===========================
 
     curl -X GET http://byoung@bigbluehat.com/
 

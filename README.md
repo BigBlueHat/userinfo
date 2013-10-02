@@ -1,5 +1,5 @@
-Cameo™ - web-based userinfo
-===========================
+userinfo - http://user@example.com/
+===================================
 
     curl -X GET http://byoung@bigbluehat.com/
 

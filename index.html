@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>userinfo by BigBlueHat</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>userinfo</h1>
+        <p>curl -X GET http://byoung@bigbluehat.com/</p>
+        <p class="view"><a href="https://github.com/BigBlueHat/userinfo">View the Project on GitHub <small>BigBlueHat/userinfo</small></a></p>
+        <ul>
+          <li><a href="https://github.com/BigBlueHat/userinfo/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/BigBlueHat/userinfo/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/BigBlueHat/userinfo">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="userinfo---httpuserexamplecom" class="anchor" href="#userinfo---httpuserexamplecom"><span class="octicon octicon-link"></span></a>userinfo - http://<a href="mailto:user@example.com">user@example.com</a>/</h1>
+
+<pre><code>curl -X GET http://byoung@bigbluehat.com/
+</code></pre>
+
+<p>I've been typing email addresses into browser
+address bars for over a decade. Now, I want
+something back.</p>
+
+<h2>
+<a name="a-user-uri-scheme" class="anchor" href="#a-user-uri-scheme"><span class="octicon octicon-link"></span></a>A User URI Scheme</h2>
+
+<p><code>mailto</code> and (more recently) <code>acct</code> provide
+methods of identifying an entity (person, bot,
+etc) by an email address.</p>
+
+<p>The <code>userinfo</code> portion of a URI
+(per <a href="http://tools.ietf.org/html/rfc3986#section-3.2.1">RFC3986</a>
+provides for such a format in HTTP URLs:</p>
+
+<blockquote>
+<p>The userinfo subcomponent may consist of a user name and, <strong>optionally</strong>,
+  scheme-specific information about how to gain authorization to access
+  the resource.</p>
+</blockquote>
+
+<p>There's more in that spec and in the more recent
+<code>httpbis</code> that runs away from the use of this
+<code>userinfo</code> URI component, but there is untapped value here.</p>
+
+<h2>
+<a name="initial-tests" class="anchor" href="#initial-tests"><span class="octicon octicon-link"></span></a>Initial Tests</h2>
+
+<p>HTTP clients will send a URL containing a <code>userinfo</code>
+component as an HTTP Authorization header. For the
+URL above, the outbound request looks like:</p>
+
+<pre><code>GET / HTTP/1.1
+Authorization: Basic YnlvdW5nOg==
+User-Agent: curl/7.26.0
+Host: bigbluehat.com
+Accept: */*
+</code></pre>
+
+<p>The server will treat this as an HTTP Basic
+Authentication request. That Base64 encoded
+bit after the word "Basic" above is the username
+<code>byoung</code> without a colon. Most other clients
+(curl seems to be the "purist") will also include
+a <code>:</code> in Base64 portion. This can be stripped
+server-side of course, but should not be sent in
+the first place (re:
+<a href="http://tools.ietf.org/html/rfc3986#section-3.2.1">RFC3986</a>).</p>
+
+<h2>
+<a name="yeah-so" class="anchor" href="#yeah-so"><span class="octicon octicon-link"></span></a>Yeah, so?</h2>
+
+<p>For me, this means a RESTful endpoint for myself.
+I intend to use
+<a href="http://en.wikipedia.org/wiki/Content_negotiation">content negotiation</a>
+to deliver my profile pic (in various formats) and
+social or authentication related markup: FOAF, XRDS,
+and hCard + OpenID discovery meta tags (done, but
+needs further testing and exploration).</p>
+
+<p>For the web, my hope is this will prove a useful
+pattern that could be adopted to more simply
+locate a person's public content. It's easy to
+imagine profile URLs such as <code>http://bigbluehat@twitter.com/</code>
+which at the very least could <a href="http://httpstatus.es/302">302</a> to my current
+Twitter profile: <a href="http://twitter.com/bigbluehat">http://twitter.com/bigbluehat</a></p>
+
+<h2>
+<a name="much-more" class="anchor" href="#much-more"><span class="octicon octicon-link"></span></a>Much more</h2>
+
+<p>There's much more to explore and explain, but
+this idea has sat in my head far too long and
+I needed it out in the wild to make room for
+new ones.</p>
+
+<p>My hope is to work this toward an
+<a href="http://www.ietf.org/id-info/">Internet-Draft</a>
+at the IETF where I'd love to see it become an
+RFC that people find useful, interesting, and
+at least inspring.</p>
+
+<h2>
+<a name="contribute" class="anchor" href="#contribute"><span class="octicon octicon-link"></span></a>Contribute</h2>
+
+<p>The biggest need right now is client testing,
+reporting, and patching.</p>
+
+<p>I'll be documenting this idea further in this
+repo in the coming weeks. For now, please use
+the issues on this repo to send me your thoughts.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>All code (forthcoming) will be licensed under the
+Apache Foundation License 2.0.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/BigBlueHat">BigBlueHat</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-80336-23");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>

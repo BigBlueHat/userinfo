@@ -1,0 +1,5 @@
+{
+  "require": {
+    "bitworking/mimeparse": "~2.1"
+  }
+}

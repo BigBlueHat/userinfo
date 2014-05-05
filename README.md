@@ -40,8 +40,7 @@ URL above, the outbound request looks like:
 The server will treat this as an HTTP Basic
 Authentication request. That Base64 encoded
 bit after the word "Basic" above is the username
-`byoung` without a colon. Most other clients
-(curl seems to be the "purist") will also include
+`byoung` without a colon. Most clients will also include
 a `:` in Base64 portion. This can be stripped
 server-side of course, but should not be sent in
 the first place (re:

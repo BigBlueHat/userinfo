@@ -49,8 +49,8 @@ $provided['text/turtle'] = <<<EOD
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
 <> a foaf:PersonalProfileDocument ;
-  foaf:maker <http://127.0.0.1/#me> ;
-  foaf:primaryTopic <http://127.0.0.1/#me> .
+  foaf:maker <#me> ;
+  foaf:primaryTopic <#me> .
 
 <#me> a foaf:Person ;
   foaf:name "Benjamin Young" ;

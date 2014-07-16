@@ -46,6 +46,23 @@ server-side of course, but should not be sent in
 the first place (re:
 [RFC3986](http://tools.ietf.org/html/rfc3986#section-3.2.1)).
 
+## Examples
+
+```
+curl http://byoung@bigbluehat.com/
+```
+Returns HTML + microformat hCard markup (at the moment).
+
+```
+curl -H "Accept: text/turtle" http://byoung@bigbluehat.com/
+```
+Returns a [WebID](http://www.w3.org/2005/Incubator/webid/spec/identity/) document.
+
+```
+curl -H "Accept: image/jpeg" http://byoung@bigbluehat.com/ > byoung.jpg
+```
+Returns a photo.
+
 ## Yeah, so?
 
 For me, this means a RESTful endpoint for myself.

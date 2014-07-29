@@ -25,6 +25,12 @@ There's more in that spec and in the more recent
 `httpbis` that runs away from the use of this
 `userinfo` URI component, but there is untapped value here.
 
+Additionally, the [`userinfo` portion of the URL is mentioned in the WHATWG URL spec](http://url.spec.whatwg.org/#concept-url-userinfo) as follows:
+
+> Userinfo must be a username, **optionally** followed by a ":" and a password.
+
+Note: emphasis added to both specs...'cause that's the important bit.
+
 ## Initial Tests
 
 HTTP clients will send a URL containing a `userinfo`

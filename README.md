@@ -14,7 +14,7 @@ methods of identifying an entity (person, bot,
 etc) by an email address.
 
 The `userinfo` portion of a URI
-(per [RFC3986](http://tools.ietf.org/html/rfc3986#section-3.2.1)
+(per [RFC3986](http://tools.ietf.org/html/rfc3986#section-3.2.1))
 provides for such a format in HTTP URLs:
 
 > The userinfo subcomponent may consist of a user name and, **optionally**,

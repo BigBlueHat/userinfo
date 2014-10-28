@@ -28,17 +28,11 @@
       </header>
       <section>
         <h1>
-<a name="userinfo---httpuserexamplecom" class="anchor" href="#userinfo---httpuserexamplecom"><span class="octicon octicon-link"></span></a>userinfo - http://<a href="mailto:user@example.com">user@example.com</a>/</h1>
+<a name="userinfo---httpuserexamplecom" class="anchor" href="#userinfo---httpuserexamplecom"><span class="octicon octicon-link"></span></a>
+A User URI Scheme</h1>
 
 <pre><code>curl -X GET http://byoung@bigbluehat.com/
 </code></pre>
-
-<p>I've been typing email addresses into browser
-address bars for over a decade. Now, I want
-something back.</p>
-
-<h2>
-<a name="a-user-uri-scheme" class="anchor" href="#a-user-uri-scheme"><span class="octicon octicon-link"></span></a>A User URI Scheme</h2>
 
 <p><code>mailto</code> and (more recently) <code>acct</code> provide
 methods of identifying an entity (person, bot,
@@ -46,7 +40,7 @@ etc) by an email address.</p>
 
 <p>The <code>userinfo</code> portion of a URI
 (per <a href="http://tools.ietf.org/html/rfc3986#section-3.2.1">RFC3986</a>
-provides for such a format in HTTP URLs:</p>
+provides for such a format in HTTP URLs (emphasis added):</p>
 
 <blockquote>
 <p>The userinfo subcomponent may consist of a user name and, <strong>optionally</strong>,
@@ -54,15 +48,34 @@ provides for such a format in HTTP URLs:</p>
   the resource.</p>
 </blockquote>
 
-<p>There's more in that spec and in the more recent
-<code>httpbis</code> that runs away from the use of this
-<code>userinfo</code> URI component, but there is untapped value here.</p>
+<p>
+In HTTP the <code>userinfo</code> portion of the URL has been used exclusively for authorization. However, other protocols (SSH, XMPP, SMTP) have used the <code>userinfo</code> for identification. HTTP should have the same facility and now it can.</p>
+
+<h2 id="ideally">Ideally</h2>
+
+<p>The hope is to introduce a <code>UserInfo</code> header to HTTP to serve the clear purpose of requesting user information from a domain.</p>
+
+<p>The flow would look something like this:</p>
+<pre id="flow">
+                                                          +---------------+
+http://byoung@bigbluehat.com/    +------------------&gt;     |               |
+                                                          |               |
+                                  GET /                   |               |
+                                  Host: bigbluehat.com    |     Server    |
+                                  UserInfo: byoung        |               |
+         +         +                                      |               |
+&lt;html&gt;   |  {      |             &lt;------------------+     |               |
+         |         |  triples                             +---------------+
+&lt;/html&gt;  |  }      |              200 OK
+         +         +              Content-Type: ...
+</pre>
 
 <h2>
 <a name="initial-tests" class="anchor" href="#initial-tests"><span class="octicon octicon-link"></span></a>Initial Tests</h2>
 
-<p>HTTP clients will send a URL containing a <code>userinfo</code>
-component as an HTTP Authorization header. For the
+<p>HTTP clients will currently send URLs in the format of
+<code>http://user@example.com/</code>
+as an HTTP Basic Authorization header. For the
 URL above, the outbound request looks like:</p>
 
 <pre><code>GET / HTTP/1.1
@@ -72,25 +85,42 @@ Host: bigbluehat.com
 Accept: */*
 </code></pre>
 
-<p>The server will treat this as an HTTP Basic
-Authentication request. That Base64 encoded
-bit after the word "Basic" above is the username
-<code>byoung</code> without a colon. Most clients will also include
-a <code>:</code> in Base64 portion. This can be stripped
-server-side of course, but should not be sent in
-the first place (re:
-<a href="http://tools.ietf.org/html/rfc3986#section-3.2.1">RFC3986</a>).</p>
+<p>The <code>Authorization</code> header contains the authorization schema (<code>Basic</code>)
+and a Base64 encoded
+string containing username
+<code>byoung</code> and typically
+a <code>:</code>.</p>
+
+<p>The <code>UserInfo</code> header is the preferred method, but if that's not
+sent, we have the information we need in this style of <code>Authorization</code>
+header. As such, it's recommended that <code>UserInfo</code> implementations
+should also handle these HTTP Basic requests including any of the following:
+<ul>
+  <li><code>base64($username)</code></li>
+  <li><code>base64($username + ':')</code></li>
+  <li><code>base64($username + ': ')</code></li>
+</ul>
+Each of these have been spotted "in the wild" and should be supported by server
+implementations as a fallback.
+</p>
+
+<h2 id="clients">Clients</h2>
+
+<p>Given this URL, <code>http://user@example.com/</code>, client implementations
+SHOULD send the <code>UserInfo</code> header (as <a href="#flow">seen above</a>).
+Only Server implementations should care about the Authorization-based fallback
+(essentially because your HTTP client <em>already</em> sends them now without
+modification.</p>
 
 <h2>
 <a name="yeah-so" class="anchor" href="#yeah-so"><span class="octicon octicon-link"></span></a>Yeah, so?</h2>
 
 <p>For me, this means a RESTful endpoint for myself.
-I intend to use
+It's trivial to use
 <a href="http://en.wikipedia.org/wiki/Content_negotiation">content negotiation</a>
-to deliver my profile pic (in various formats) and
-social or authentication related markup: FOAF, XRDS,
-and hCard + OpenID discovery meta tags (done, but
-needs further testing and exploration).</p>
+to deliver a profile pic (in various formats) and
+social or authentication related markup: FoaF, XRD, JRD, OpenID Connect Profiles,
+HTML + hCard + OpenID discovery meta tags, etc.</p>
 
 <p>For the web, my hope is this will prove a useful
 pattern that could be adopted to more simply

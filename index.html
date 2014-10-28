@@ -70,6 +70,15 @@ http://byoung@bigbluehat.com/    +------------------&gt;     |               |
          +         +              Content-Type: ...
 </pre>
 
+<p>Additionally, the <a href="http://url.spec.whatwg.org/#concept-url-userinfo"><code>userinfo</code> portion of
+the URL is mentioned in the WHATWG URL spec</a> as follows:</p>
+
+<blockquote>
+    <p>Userinfo must be a username, <strong>optionally</strong> followed by a ":" and a password.</p>
+</blockquote>
+
+<p>Note: emphasis added to both specs...'cause that's the important bit.</p>
+
 <h2>
 <a name="initial-tests" class="anchor" href="#initial-tests"><span class="octicon octicon-link"></span></a>Initial Tests</h2>
 
@@ -111,6 +120,24 @@ SHOULD send the <code>UserInfo</code> header (as <a href="#flow">seen above</a>)
 Only Server implementations should care about the Authorization-based fallback
 (essentially because your HTTP client <em>already</em> sends them now without
 modification.</p>
+
+<h2>
+<a name="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<pre><code>curl http://byoung@bigbluehat.com/
+</code></pre>
+
+<p>Returns HTML + microformat hCard markup (at the moment).</p>
+
+<pre><code>curl -H "Accept: text/turtle" http://byoung@bigbluehat.com/
+</code></pre>
+
+<p>Returns a <a href="http://www.w3.org/2005/Incubator/webid/spec/identity/">WebID</a> document.</p>
+
+<pre><code>curl -H "Accept: image/jpeg" http://byoung@bigbluehat.com/ &gt; byoung.jpg
+</code></pre>
+
+<p>Returns a photo.</p>
 
 <h2>
 <a name="yeah-so" class="anchor" href="#yeah-so"><span class="octicon octicon-link"></span></a>Yeah, so?</h2>

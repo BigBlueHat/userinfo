@@ -32,16 +32,16 @@
 <a name="userinfo---httpuserexamplecom" class="anchor" href="#userinfo---httpuserexamplecom"><span class="octicon octicon-link"></span></a>
 A User URI Scheme</h1>
 
-<pre><code>curl -X GET http://byoung@bigbluehat.com/
+<pre><code>curl http://byoung@bigbluehat.com/
 </code></pre>
 
-<p><code>mailto</code> and (more recently) <code>acct</code> provide
+<p><code>mailto</code> and (more recently) <code title="part of WebFinger - RFC 7033">acct</code> provide
 methods of identifying an entity (person, bot,
-etc) by an email address.</p>
+etc) by an email address like identifier.</p>
 
 <p>The <code>userinfo</code> portion of a URI
 (per <a href="http://tools.ietf.org/html/rfc3986#section-3.2.1">RFC3986</a>
-provides for such a format in HTTP URLs (emphasis added):</p>
+provides for such a format in URI design (emphasis added):</p>
 
 <blockquote>
 <p>The userinfo subcomponent may consist of a user name and, <strong>optionally</strong>,
@@ -50,7 +50,7 @@ provides for such a format in HTTP URLs (emphasis added):</p>
 </blockquote>
 
 <p>
-In HTTP the <code>userinfo</code> portion of the URL has been used exclusively for authorization. However, other protocols (SSH, XMPP, SMTP) have used the <code>userinfo</code> for identification. HTTP should have the same facility and now it can.</p>
+In HTTP the <code>userinfo</code> portion of the URL has been used exclusively for authorization. However, other protocols (SSH, XMPP, SMTP) have used the <code>userinfo</code> portion for identification. HTTP should have the same facility and now it can.</p>
 
 <h2 id="ideally">Ideally</h2>
 
@@ -72,13 +72,11 @@ http://byoung@bigbluehat.com/    +------------------&gt;     |               |
 </pre>
 
 <p>Additionally, the <a href="http://url.spec.whatwg.org/#concept-url-userinfo"><code>userinfo</code> portion of
-the URL is mentioned in the WHATWG URL spec</a> as follows:</p>
+the URL is mentioned in the WHATWG URL spec</a> as follows (emphasis added):</p>
 
 <blockquote>
     <p>Userinfo must be a username, <strong>optionally</strong> followed by a ":" and a password.</p>
 </blockquote>
-
-<p>Note: emphasis added to both specs...'cause that's the important bit.</p>
 
 <h2>
 <a name="initial-tests" class="anchor" href="#initial-tests"><span class="octicon octicon-link"></span></a>Initial Tests</h2>
@@ -160,12 +158,7 @@ Twitter profile: <a href="http://twitter.com/bigbluehat">http://twitter.com/bigb
 <h2>
 <a name="much-more" class="anchor" href="#much-more"><span class="octicon octicon-link"></span></a>Much more</h2>
 
-<p>There's much more to explore and explain, but
-this idea has sat in my head far too long and
-I needed it out in the wild to make room for
-new ones.</p>
-
-<p>My hope is to work this toward an
+<p>The hope is to work this toward an
 <a href="http://www.ietf.org/id-info/">Internet-Draft</a>
 at the IETF where I'd love to see it become an
 RFC that people find useful, interesting, and
@@ -175,17 +168,15 @@ at least inspring.</p>
 <a name="contribute" class="anchor" href="#contribute"><span class="octicon octicon-link"></span></a>Contribute</h2>
 
 <p>The biggest need right now is client testing,
-reporting, and patching.</p>
-
-<p>I'll be documenting this idea further in this
-repo in the coming weeks. For now, please use
-the issues on this repo to send me your thoughts.</p>
+reporting, and patching. Please use
+the issues on <a href="http://github.com/BigBlueHat/userinfo">the `userinfo` repo</a>
+to send in your thoughts.</p>
 
 <h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
-<p>All code (forthcoming) will be licensed under the
-Apache Foundation License 2.0.</p>
+<p>All code is licensed under the Apache Foundation License 2.0.</p>
+
       </section>
     </div>
     <footer>

@@ -54,7 +54,7 @@ In HTTP the <code>userinfo</code> portion of the URL has been used exclusively f
 
 <h2 id="ideally">Ideally</h2>
 
-<p>The hope is to introduce a <code>UserInfo</code> header to HTTP to serve the clear purpose of requesting user information from a domain.</p>
+<p>The hope is to introduce a <code>User-Info</code> header to HTTP to serve the clear purpose of requesting user information from a domain.</p>
 
 <p>The flow would look something like this:</p>
 <pre id="flow">
@@ -63,7 +63,7 @@ http://byoung@bigbluehat.com/    +------------------&gt;     |               |
                                                           |               |
                                   GET /                   |               |
                                   Host: bigbluehat.com    |     Server    |
-                                  UserInfo: byoung        |               |
+                                  User-Info: byoung       |               |
          +         +                                      |               |
 &lt;html&gt;   |  {      |             &lt;------------------+     |               |
          |         |  triples                             +---------------+
@@ -101,9 +101,9 @@ string containing username
 <code>byoung</code> and typically
 a <code>:</code>.</p>
 
-<p>The <code>UserInfo</code> header is the preferred method, but if that's not
+<p>The <code>User-Info</code> header is the preferred method, but if that's not
 sent, we have the information we need in this style of <code>Authorization</code>
-header. As such, it's recommended that <code>UserInfo</code> implementations
+header. As such, it's recommended that <code>User-Info</code> implementations
 should also handle these HTTP Basic requests including any of the following:
 <ul>
   <li><code>base64($username)</code></li>
@@ -117,7 +117,7 @@ implementations as a fallback.
 <h2 id="clients">Clients</h2>
 
 <p>Given this URL, <code>http://user@example.com/</code>, client implementations
-SHOULD send the <code>UserInfo</code> header (as <a href="#flow">seen above</a>).
+SHOULD send the <code>User-Info</code> header (as <a href="#flow">seen above</a>).
 Only Server implementations should care about the Authorization-based fallback
 (essentially because your HTTP client <em>already</em> sends them now without
 modification.</p>

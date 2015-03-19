@@ -49,14 +49,30 @@ provides for such a format in URI design (emphasis added):</p>
   the resource.</p>
 </blockquote>
 
+<p>Additionally, the <code>userinfo</code> portion of
+the URL is mentioned in the <a href="http://url.spec.whatwg.org/#concept-url-userinfo">WHATWG URL spec</a> as follows (emphasis added):</p>
+
+<blockquote>
+    <p>Userinfo must be a username, <strong>optionally</strong> followed by a ":" and a password.</p>
+</blockquote>
+
 <p>
 In HTTP the <code>userinfo</code> portion of the URL has been used exclusively for authorization. However, other protocols (SSH, XMPP, SMTP) have used the <code>userinfo</code> portion for identification. HTTP should have the same facility and now it can.</p>
 
-<h2 id="ideally">Ideally</h2>
+<h2 id="ideally">The Plan</h2>
 
-<p>The hope is to introduce a <code>User-Info</code> header to HTTP to serve the clear purpose of requesting user information from a domain.</p>
+<p>The hope is to introduce a <code>User-Info</code> header to HTTP to serve
+the clear purpose of requesting user / agent information from a domain.</p>
 
-<p>The flow would look something like this:</p>
+<p>Doing this now with <code>curl</code> (or any other HTTP client) looks like
+adding the proposed <code>User-Info</code> header to the request. For instance:</p>
+
+<pre><code>curl http://bigbluehat.com/ -H 'User-Info: byoung'</code></pre>
+
+<p>Which is obviously not as pretty...yet.</p>
+
+<p>If implemented natively in an HTTP client, the flow would look something
+like this:</p>
 <pre id="flow">
                                                           +---------------+
 http://byoung@bigbluehat.com/    +------------------&gt;     |               |
@@ -71,15 +87,11 @@ http://byoung@bigbluehat.com/    +------------------&gt;     |               |
          +         +              Content-Type: ...
 </pre>
 
-<p>Additionally, the <a href="http://url.spec.whatwg.org/#concept-url-userinfo"><code>userinfo</code> portion of
-the URL is mentioned in the WHATWG URL spec</a> as follows (emphasis added):</p>
-
-<blockquote>
-    <p>Userinfo must be a username, <strong>optionally</strong> followed by a ":" and a password.</p>
-</blockquote>
+<p>The <code>userinfo</code> portion of the URI now becomes the <code>User-Info</code>
+header in the HTTP sent to the server. Or that's The Plan.</p>
 
 <h2>
-<a name="initial-tests" class="anchor" href="#initial-tests"><span class="octicon octicon-link"></span></a>Initial Tests</h2>
+<a name="initial-tests" class="anchor" href="#initial-tests"><span class="octicon octicon-link"></span></a>Doing it Now</h2>
 
 <p>HTTP clients will currently send URLs in the format of
 <code>http://user@example.com/</code>

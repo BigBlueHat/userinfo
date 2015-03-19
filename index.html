@@ -95,8 +95,9 @@ header in the HTTP sent to the server. Or that's The Plan.</p>
 
 <p>HTTP clients will currently send URLs in the format of
 <code>http://user@example.com/</code>
-as an HTTP Basic Authorization header. For the
-URL above, the outbound request looks like:</p>
+as an HTTP Basic Authorization header. Currently the
+URL above, the outbound request sent by <code>curl</code> (and most other HTTP
+clients) looks like:</p>
 
 <pre><code>GET / HTTP/1.1
 Authorization: Basic YnlvdW5nOg==
@@ -113,8 +114,8 @@ a <code>:</code>.</p>
 
 <p>The <code>User-Info</code> header is the preferred method, but if that's not
 sent, we have the information we need in this style of <code>Authorization</code>
-header. As such, it's recommended that <code>User-Info</code> implementations
-should also handle these HTTP Basic requests including any of the following:
+header. As such, it's recommended that implementations
+also handle these fallback HTTP Basic requests, including any of the following:
 <ul>
   <li><code>base64($username)</code></li>
   <li><code>base64($username + ':')</code></li>

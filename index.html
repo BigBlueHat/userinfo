@@ -13,6 +13,14 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script src="javascripts/uri.js"></script>
+    <script src="javascripts/userinfo.js"></script>
+    <style>
+    form { margin-bottom: 1em; }
+    input, textarea { padding: 5px 0 5px 7px; margin: 2px; }
+    button { padding: 4px; }
+    #url, #userinfo { width: 100%; }
+    </style>
   </head>
   <body>
     <div class="wrapper">
@@ -151,6 +159,26 @@ modification).</p>
 
 <p>Returns a photo.</p>
 
+<h2>
+<a name="#test-it" class="anchor" href="#test-it"><span class="octicon octicon-link"></span></a>Test it!</h2>
+
+  <form>
+    <input id="url" value="http://byoung@bigbluehat.com" />
+    <br />
+    <input id="accept" placeholder="application/ld+json" />
+    <button id="test">Test</button>
+    <br />
+    <textarea id="userinfo"></textarea>
+    <script>
+     document.getElementById('test').onclick = function() {
+        var url = document.getElementById('url').value;
+        var accept = document.getElementById('accept').value;
+        userinfo(url, accept).then(function(data) {
+          document.getElementById('userinfo').value = data;
+        });
+     };
+    </script>
+  </form>
 <h2>
 <a name="yeah-so" class="anchor" href="#yeah-so"><span class="octicon octicon-link"></span></a>Yeah, so?</h2>
 

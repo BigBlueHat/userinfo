@@ -16,17 +16,18 @@
     <script src="javascripts/uri.js"></script>
     <script src="javascripts/userinfo.js"></script>
     <style>
-    form { margin-bottom: 1em; }
+    .form { margin-bottom: 1em; }
     input, textarea { padding: 5px 0 5px 7px; margin: 2px; }
     button { padding: 4px; }
     #url, #userinfo { width: 100%; }
+    #userinfo { height: 30em; }
     </style>
   </head>
   <body>
     <div class="wrapper">
       <header>
         <h1>userinfo</h1>
-        <p>curl -X GET http://byoung@bigbluehat.com/</p>
+        <p>curl http://byoung@bigbluehat.com/</p>
         <p class="view"><a href="https://github.com/BigBlueHat/userinfo">View the Project on GitHub <small>BigBlueHat/userinfo</small></a></p>
         <ul>
           <li><a href="https://github.com/BigBlueHat/userinfo/zipball/master">Download <strong>ZIP File</strong></a></li>
@@ -45,10 +46,10 @@ A User URI Scheme</h1>
 
 <p><code>mailto</code> and (more recently) <code title="part of WebFinger - RFC 7033">acct</code> provide
 methods of identifying an entity (person, bot,
-etc) by an email address like identifier.</p>
+etc) by an email address-like identifier.</p>
 
 <p>The <code>userinfo</code> portion of a URI
-(per <a href="http://tools.ietf.org/html/rfc3986#section-3.2.1">RFC3986</a>
+per <a href="http://tools.ietf.org/html/rfc3986#section-3.2.1">RFC 3986</a>
 provides for such a format in URI design (emphasis added):</p>
 
 <blockquote>
@@ -69,15 +70,15 @@ In HTTP the <code>userinfo</code> portion of the URL has been used exclusively f
 
 <h2 id="ideally">The Plan</h2>
 
-<p>The hope is to introduce a <code>User-Info</code> header to HTTP to serve
-the clear purpose of requesting user / agent information from a domain.</p>
+<p>Introduce a <code>User-Info</code> header to request user / agent
+information from a domain.</p>
 
 <p>Doing this now with <code>curl</code> (or any other HTTP client) looks like
 adding the proposed <code>User-Info</code> header to the request. For instance:</p>
 
 <pre><code>curl http://bigbluehat.com/ -H 'User-Info: byoung'</code></pre>
 
-<p>Which is obviously not as pretty...yet.</p>
+<p>Which is obviously not as pretty&hellip;yet.</p>
 
 <p>If implemented natively in an HTTP client, the flow would look something
 like this:</p>
@@ -88,11 +89,11 @@ http://byoung@bigbluehat.com/    +------------------&gt;     |               |
                                   GET /                   |               |
                                   Host: bigbluehat.com    |     Server    |
                                   User-Info: byoung       |               |
-         +         +                                      |               |
-&lt;html&gt;   |  {      |             &lt;------------------+     |               |
-         |         |  triples                             +---------------+
-&lt;/html&gt;  |  }      |              200 OK
-         +         +              Content-Type: ...
+         +          +                                     |               |
+&lt;html&gt;   |  {       |            &lt;------------------+     |               |
+         | "k": "v" |  triples                            +---------------+
+&lt;/html&gt;  |  }       |              200 OK
+         +          +              Content-Type: ...
 </pre>
 
 <p>The <code>userinfo</code> portion of the URI now becomes the <code>User-Info</code>
@@ -103,7 +104,7 @@ header in the HTTP sent to the server. Or that's The Plan.</p>
 
 <p>HTTP clients will currently send URLs in the format of
 <code>http://user@example.com/</code>
-as an HTTP Basic Authorization header. Currently the
+as an HTTP Basic Authorization header. In the example
 URL above, the outbound request sent by <code>curl</code> (and most other HTTP
 clients) looks like:</p>
 
@@ -123,14 +124,13 @@ a <code>:</code>.</p>
 <p>The <code>User-Info</code> header is the preferred method, but if that's not
 sent, we have the information we need in this style of <code>Authorization</code>
 header. As such, it's recommended that implementations
-also handle these fallback HTTP Basic requests, including any of the following:
+handle these fallback HTTP Basic requests, including any of the following, each
+of which have been spotted in the wild:
 <ul>
   <li><code>base64($username)</code></li>
   <li><code>base64($username + ':')</code></li>
   <li><code>base64($username + ': ')</code></li>
 </ul>
-Each of these have been spotted "in the wild" and should be supported by server
-implementations as a fallback.
 </p>
 
 <h2 id="clients">Clients</h2>
@@ -160,9 +160,9 @@ modification).</p>
 <p>Returns a photo.</p>
 
 <h2>
-<a name="#test-it" class="anchor" href="#test-it"><span class="octicon octicon-link"></span></a>Test it!</h2>
+<a name="test-it" class="anchor" href="#test-it"><span class="octicon octicon-link"></span></a>Test it!</h2>
 
-  <form>
+  <div class="form">
     <input id="url" value="http://byoung@bigbluehat.com" />
     <br />
     <input id="accept" placeholder="application/ld+json" />
@@ -178,7 +178,8 @@ modification).</p>
         });
      };
     </script>
-  </form>
+  </div>
+
 <h2>
 <a name="yeah-so" class="anchor" href="#yeah-so"><span class="octicon octicon-link"></span></a>Yeah, so?</h2>
 

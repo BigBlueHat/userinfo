@@ -131,7 +131,7 @@ implementations as a fallback.
 SHOULD send the <code>User-Info</code> header (as <a href="#flow">seen above</a>).
 Only Server implementations should care about the Authorization-based fallback
 (essentially because your HTTP client <em>already</em> sends them now without
-modification.</p>
+modification).</p>
 
 <h2>
 <a name="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
@@ -161,29 +161,19 @@ to deliver a profile pic (in various formats) and
 social or authentication related markup: FoaF, XRD, JRD, OpenID Connect Profiles,
 HTML + hCard + OpenID discovery meta tags, etc.</p>
 
-<p>For the web, my hope is this will prove a useful
-pattern that could be adopted to more simply
-locate a person's public content. It's easy to
-imagine profile URLs such as <code>http://bigbluehat@twitter.com/</code>
-which at the very least could <a href="http://httpstatus.es/302">302</a> to my current
-Twitter profile: <a href="http://twitter.com/bigbluehat">http://twitter.com/bigbluehat</a></p>
-
-<h2>
-<a name="much-more" class="anchor" href="#much-more"><span class="octicon octicon-link"></span></a>Much more</h2>
-
-<p>The hope is to work this toward an
-<a href="http://www.ietf.org/id-info/">Internet-Draft</a>
-at the IETF where I'd love to see it become an
-RFC that people find useful, interesting, and
-at least inspring.</p>
+<p>At the very least, implementations can benefit from URLs in this style,
+and could send <a href="http://httpstatus.es/302">302</a> response codes redirecting
+to a current social network profile document or social stream, such as
+<a href="http://twitter.com/bigbluehat">http://twitter.com/bigbluehat</a></p>
 
 <h2>
 <a name="contribute" class="anchor" href="#contribute"><span class="octicon octicon-link"></span></a>Contribute</h2>
 
 <p>The biggest need right now is client testing,
-reporting, and patching. Please use
+reporting, and patching / implementation of the <code>User-Info</code> header
+and URL parsing. Please use
 the issues on <a href="http://github.com/BigBlueHat/userinfo">the `userinfo` repo</a>
-to send in your thoughts.</p>
+to send in your thoughts, stories, and implementation details.</p>
 
 <h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
